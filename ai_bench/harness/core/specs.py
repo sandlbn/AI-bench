@@ -15,7 +15,7 @@ class InKey(StrEnum):
 class VKey(StrEnum):
     """Keys for spec variants"""
 
-    VAR_CI = "ci"
+    V_CI = "ci"
     PARAMS = "params"
     DIMS = "dims"
 

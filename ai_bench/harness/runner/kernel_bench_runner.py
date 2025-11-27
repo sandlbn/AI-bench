@@ -17,7 +17,7 @@ class KernelBenchRunner:
         if not os.path.isdir(self.kernels):
             raise ValueError("Missing KernelBench kernels directory")
         self.device = device
-        self.spec_type = ai_hc.VKey.VAR_CI
+        self.spec_type = ai_hc.VKey.V_CI
 
     def get_spec_dirs(self) -> list[Path]:
         return [Path(dir) for dir in os.scandir(self.specs) if dir.is_dir()]
