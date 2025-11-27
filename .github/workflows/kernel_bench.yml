@@ -1,0 +1,22 @@
+name: KernelBench kernels
+
+on:
+  workflow_dispatch:
+
+jobs:
+  CPU:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Setup environment
+        run: |
+          git submodule update --init
+          uv sync --extra torch-cpu
+
+      - name: Run KernelBench
+        run: uv run ${{ github.workspace }}/infra/scripts/run_kernel_bench.py
