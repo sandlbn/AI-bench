@@ -17,6 +17,19 @@ dev = [
   "pre-commit",
 ]
 
+[project.optional-dependencies]
+torch_cpu = [
+  "torch==2.9.1+cpu"
+]
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["ai_bench"]
