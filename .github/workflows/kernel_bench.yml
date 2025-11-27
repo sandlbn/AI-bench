@@ -2,10 +2,25 @@ name: KernelBench kernels
 
 on:
   workflow_dispatch:
+    inputs:
+      RUN_CPU:
+        description: "Run on CPU"
+        type: boolean
+        default: true
+      RUN_XPU:
+        description: "Run on Intel GPU"
+        type: boolean
+        default: true
+
+env:
+  NPROCS_LIMIT_LINK: 8
+  SRUN: ${HOME}/srun.sh
 
 jobs:
   CPU:
     runs-on: ubuntu-latest
+    if: |
+      (github.event_name == 'workflow_dispatch' && inputs.RUN_CPU)
 
     steps:
       - uses: actions/checkout@v5
@@ -20,3 +35,15 @@ jobs:
 
       - name: Run KernelBench
         run: uv run ${{ github.workspace }}/infra/scripts/run_kernel_bench.py
+
+  XPU:
+    runs-on: pcl-tiergarten
+    if: |
+      (github.event_name == 'workflow_dispatch' && inputs.RUN_XPU)
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Intel Arc B580
+        run: "${{ env.SRUN }} --partition=b580 --time=0:10:00 -- \
+            '${{ github.workspace }}/infra/scripts/ci-xpu-run-kernel-bench.sh'"
