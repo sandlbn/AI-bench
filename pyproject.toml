@@ -53,6 +53,11 @@ select = [
   "E", # Error
   "F", # Pyflakes
   "I", # isort
+  "N801", # invalid-class-name
+  "N804", # cls for class methods
+  "N805", # self for methods
+  "N818", # error-suffix-on-exception-name
+  "N999", # invalid-module-name
   "PERF", # Perflint
   "RUF022", # __all__ is not sorted
   "RUF030", # print() call in assert
