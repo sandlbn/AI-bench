@@ -1,4 +1,5 @@
 from .specs import InKey
+from .specs import SpecKey
 from .specs import VKey
 from .specs import get_inputs
 from .specs import get_torch_dtype
@@ -7,6 +8,7 @@ from .specs import input_torch_dtype
 
 __all__ = [
     "InKey",
+    "SpecKey",
     "VKey",
     "get_inputs",
     "get_torch_dtype",

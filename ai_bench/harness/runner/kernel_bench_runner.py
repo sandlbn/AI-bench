@@ -17,7 +17,7 @@ class KernelBenchRunner:
         if not os.path.isdir(self.kernels):
             raise ValueError("Missing KernelBench kernels directory")
         self.device = device
-        self.spec_type = ai_hc.VKey.V_CI
+        self.spec_type = ai_hc.SpecKey.V_CI
 
     def get_spec_dirs(self) -> list[Path]:
         return [Path(dir) for dir in os.scandir(self.specs) if dir.is_dir()]
@@ -41,7 +41,7 @@ class KernelBenchRunner:
                 if self.spec_type not in spec:
                     continue
                 variants = spec[self.spec_type]
-                inputs = spec[ai_hc.InKey.INS]
+                inputs = spec[ai_hc.SpecKey.INS]
 
                 # Import kernel file to access underlying Model and execution method.
                 # Spec and kernel file names are expected to be identical.

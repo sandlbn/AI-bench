@@ -4,18 +4,23 @@ from typing import Dict
 import torch
 
 
-class InKey(StrEnum):
-    """Keys for spec inputs"""
+class SpecKey(StrEnum):
+    """Keys for spec top-level categories"""
 
     INS = "inputs"
+    V_CI = "ci"
+
+
+class InKey(StrEnum):
+    """Keys for spec inputs fields"""
+
     SHAPE = "shape"
     TYPE = "dtype"
 
 
 class VKey(StrEnum):
-    """Keys for spec variants"""
+    """Keys for spec variants fields"""
 
-    V_CI = "ci"
     PARAMS = "params"
     DIMS = "dims"
 
