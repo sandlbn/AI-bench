@@ -8,16 +8,17 @@ import yaml
 
 from ai_bench import utils as ai_utils
 from ai_bench.harness import core as ai_hc
+from ai_bench.harness import testing
 
 
 class KernelBenchRunner:
     def __init__(self, device: torch.device | None = None):
         self.specs = ai_utils.specs() / "KernelBench"
+        self.spec_type = ai_hc.SpecKey.V_CI
         self.kernels = ai_utils.kernel_bench_dir() / "KernelBench"
         if not os.path.isdir(self.kernels):
             raise ValueError("Missing KernelBench kernels directory")
-        self.device = device
-        self.spec_type = ai_hc.SpecKey.V_CI
+        self.device = device if device else torch.device("cpu")
 
     def get_spec_dirs(self) -> list[Path]:
         return [Path(dir) for dir in os.scandir(self.specs) if dir.is_dir()]
@@ -56,5 +57,10 @@ class KernelBenchRunner:
                 print(f"Kernel: {file}")
                 for variant in variants:
                     print(f"Running: {variant}")
+                    fn = model.forward
                     args = ai_hc.get_inputs(variant, inputs, device=self.device)
-                    model.forward(*args)
+                    if self.device.type == "cpu":
+                        meas = testing.time(fn, args, warmup=3, rep=10)
+                        print(f"time: {meas}us")
+                    else:
+                        fn(*args)
