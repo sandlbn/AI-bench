@@ -5,28 +5,28 @@ import torch
 
 
 class SpecKey(StrEnum):
-    """Keys for spec top-level categories"""
+    """Keys for spec top-level categories."""
 
     INS = "inputs"
     V_CI = "ci"
 
 
 class InKey(StrEnum):
-    """Keys for spec inputs fields"""
+    """Keys for spec inputs fields."""
 
     SHAPE = "shape"
     TYPE = "dtype"
 
 
 class VKey(StrEnum):
-    """Keys for spec variants fields"""
+    """Keys for spec variants fields."""
 
     PARAMS = "params"
     DIMS = "dims"
 
 
 def input_shape(input: dict, dims: Dict[str, int]) -> list[int]:
-    """Return shape of an input
+    """Return shape of an input.
     Args:
         input: Specs' input entry
         dims: Specs' dimensions and their sizes
@@ -38,7 +38,7 @@ def input_shape(input: dict, dims: Dict[str, int]) -> list[int]:
 
 
 def get_torch_dtype(dtype: str) -> torch.dtype:
-    """Maps specs' type to torch type
+    """Maps specs' type to torch type.
     Args:
         dtype: Specs' data type
     Returns:

@@ -9,7 +9,7 @@ import types
 def import_from_path(
     module_name: str, file_path: str | os.PathLike
 ) -> types.ModuleType:
-    """Import a module directly from a source file
+    """Import a module directly from a source file.
     Args:
         module_name: Name of the module
         file_path: Absolute path to a Python file

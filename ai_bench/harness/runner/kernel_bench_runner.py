@@ -12,6 +12,13 @@ from ai_bench.harness import testing
 
 
 class KernelBenchRunner:
+    """
+    Run KernelBench problems.
+
+    Args:
+        device: Device to use
+    """
+
     def __init__(self, device: torch.device | None = None):
         self.specs = ai_utils.specs() / "KernelBench"
         self.spec_type = ai_hc.SpecKey.V_CI
@@ -21,9 +28,22 @@ class KernelBenchRunner:
         self.device = device if device else torch.device("cpu")
 
     def get_spec_dirs(self) -> list[Path]:
+        """Get KernelBench level dirs.
+        Returns:
+            Paths to spec directories
+        """
         return [Path(dir) for dir in os.scandir(self.specs) if dir.is_dir()]
 
     def load_model(self, kernel_path: Path) -> types.ModuleType | None:
+        """Load KernelBench model.
+        All kernel modules are standarized with a class wrapper containing
+        computation definition and a runner method.
+        These models can be imported and used directly by the runner.
+        Args:
+            kernel_path: Path to KernelBench module '.py' file
+        Returns:
+            Loaded KernelBench model if available
+        """
         if not kernel_path.is_file():
             return None
         mod = ai_utils.import_from_path("kernel_bench_model", kernel_path)
@@ -32,6 +52,7 @@ class KernelBenchRunner:
         return mod.Model()
 
     def run_kernels(self):
+        """Run all KernelBench kernels."""
         # Iterate over specs of kernel levels.
         for spec_dir in self.get_spec_dirs():
             # Iterate over specs - one per kernel.
