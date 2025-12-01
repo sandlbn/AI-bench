@@ -1,0 +1,28 @@
+name: Tests
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+
+env:
+  NPROCS_LIMIT_LINK: 8
+  SRUN: ${HOME}/srun.sh
+
+jobs:
+  CPU:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Setup project
+        run: |
+          git submodule update --init
+          uv sync --extra cpu
+
+      - name: Run KernelBench
+        run: uv run ${{ github.workspace }}/infra/scripts/run_kernel_bench.py
