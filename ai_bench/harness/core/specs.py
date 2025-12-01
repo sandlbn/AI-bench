@@ -9,6 +9,8 @@ class SpecKey(StrEnum):
 
     INS = "inputs"
     V_CI = "ci"
+    V_BENCH_CPU = "bench-cpu"
+    V_BENCH_GPU = "bench-gpu"
 
 
 class InKey(StrEnum):

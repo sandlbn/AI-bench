@@ -16,16 +16,31 @@ class KernelBenchRunner:
     Run KernelBench problems.
 
     Args:
+        spec_type: Type of problem spec to use
         device: Device to use
     """
 
-    def __init__(self, device: torch.device | None = None):
+    def __init__(
+        self,
+        spec_type: ai_hc.SpecKey = ai_hc.SpecKey.V_CI,
+        device: torch.device | None = None,
+    ):
         self.specs = ai_utils.specs() / "KernelBench"
-        self.spec_type = ai_hc.SpecKey.V_CI
         self.kernels = ai_utils.kernel_bench_dir() / "KernelBench"
         if not os.path.isdir(self.kernels):
             raise ValueError("Missing KernelBench kernels directory")
+
+        self.spec_type = spec_type
         self.device = device if device else torch.device("cpu")
+        if self.device.type == "cpu":
+            self.warmup = 5
+            self.rep = 20
+        elif self.device.type == "xpu":
+            self.warmup = 20
+            self.rep = 100
+        else:
+            self.warmup = 25
+            self.rep = 100
 
     def get_spec_dirs(self) -> list[Path]:
         """Get KernelBench level dirs.
@@ -77,14 +92,15 @@ class KernelBenchRunner:
                 # Run the kernel with provided input configurations.
                 print(f"Kernel: {file}")
                 for variant in variants:
-                    print(f"Running: {variant}")
                     fn = model.forward
                     args = ai_hc.get_inputs(variant, inputs, device=self.device)
-                    if self.device.type == "cpu":
-                        meas = testing.time(fn, args, warmup=5, rep=20)
-                        print(f"time: {meas}us")
-                    if self.device.type == "xpu":
-                        meas = testing.time(fn, args, warmup=20, rep=100)
-                        print(f"time: {meas}us")
-                    else:
+
+                    # Simple CI run to verify functionality
+                    if self.spec_type == ai_hc.SpecKey.V_CI:
+                        print(f"Validating: {variant}")
                         fn(*args)
+                        continue
+
+                    print(f"Benchmarking: {variant}")
+                    meas = testing.time(fn, args, warmup=self.warmup, rep=self.rep)
+                    print(f"time: {meas}us")

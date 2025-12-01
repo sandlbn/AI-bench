@@ -7,4 +7,16 @@ ci:
   - params: [X]
     dims:
       BATCH: 128
-      DIM: 1024
+      DIM: 512
+
+bench-cpu:
+  - params: [X]
+    dims:
+      BATCH: 128
+      DIM: 2048
+
+bench-gpu:
+  - params: [X]
+    dims:
+      BATCH: 1024
+      DIM: 16384

@@ -9,6 +9,20 @@ inputs:
 ci:
   - params: [A, B]
     dims:
+      M: 64
+      N: 128
+      K: 256
+
+bench-cpu:
+  - params: [A, B]
+    dims:
       M: 128
       N: 256
       K: 512
+
+bench-gpu:
+  - params: [A, B]
+    dims:
+      M: 3072
+      N: 3072
+      K: 4096

@@ -6,7 +6,18 @@ inputs:
     shape: [N, N]
     dtype: float16
 
-ci:
+bench-cpu:
   - params: [A, B]
     dims:
-      N: 512
+      N: 256
+
+bench-gpu:
+  - params: [A, B]
+    dims:
+      N: 1024
+  - params: [A, B]
+    dims:
+      N: 2048
+  - params: [A, B]
+    dims:
+      N: 4096
