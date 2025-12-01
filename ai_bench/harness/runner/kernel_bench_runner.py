@@ -105,4 +105,4 @@ class KernelBenchRunner:
                     meas = testing.time(
                         fn, args, warmup=self.warmup, rep=self.rep, device=self.device
                     )
-                    print(f"time: {meas}us")
+                    print(f"time [us]: {meas}")
