@@ -96,7 +96,7 @@ class KernelBenchRunner:
                 print(f"Kernel: {spec_dir.name} / {file}")
                 for variant in variants:
                     model_inits = ai_hc.get_inits(variant, inits)
-                    model = model_obj(*model_inits)
+                    model = model_obj(*model_inits).to(self.device)
                     fn = model.forward
                     args = ai_hc.get_inputs(variant, inputs, device=self.device)
 
