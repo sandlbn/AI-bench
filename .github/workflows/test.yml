@@ -10,7 +10,7 @@ env:
   SRUN: ${HOME}/srun.sh
 
 jobs:
-  Test CPU:
+  Test-CPU:
     runs-on: ubuntu-latest
 
     steps:
