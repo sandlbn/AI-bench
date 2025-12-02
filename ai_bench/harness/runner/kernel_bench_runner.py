@@ -109,7 +109,7 @@ class KernelBenchRunner:
                     flop = ai_hc.get_flop(variant)
                     if flop:
                         tflops = flop / meas / 1e6
-                        if tflops > 0.1:
+                        if tflops >= 1.0:
                             print(" - TFLOPS: {:.6f}".format(tflops), end=" ")
                         else:
                             print(" - GFLOPS: {:.6f}".format(tflops * 1000), end=" ")
