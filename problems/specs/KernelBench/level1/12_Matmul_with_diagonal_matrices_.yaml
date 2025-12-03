@@ -1,0 +1,19 @@
+inputs:
+  A:
+    shape: [N]
+    dtype: float16
+  B:
+    shape: [N, M]
+    dtype: float16
+
+ci:
+  - params: [A, B]
+    dims:
+      M: 128
+      N: 128
+
+bench-gpu:
+  - params: [A, B]
+    dims:
+      M: 4096
+      N: 4096

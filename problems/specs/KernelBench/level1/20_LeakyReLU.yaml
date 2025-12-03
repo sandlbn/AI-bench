@@ -1,0 +1,16 @@
+inputs:
+  X:
+    shape: [BATCH, DIM]
+    dtype: float16
+
+ci:
+  - params: [X]
+    dims:
+      BATCH: 128
+      DIM: 512
+
+bench-gpu:
+  - params: [X]
+    dims:
+      BATCH: 1024
+      DIM: 16384

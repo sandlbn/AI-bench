@@ -1,0 +1,25 @@
+inputs:
+  A:
+    shape: [B, I, J, L]
+    dtype: float16
+  B:
+    shape: [L, K]
+    dtype: float16
+
+ci:
+  - params: [A, B]
+    dims:
+      B: 2
+      I: 32
+      J: 64
+      L: 32
+      K: 24
+
+bench-gpu:
+  - params: [A, B]
+    dims:
+      B: 8
+      I: 256
+      J: 512
+      L: 256
+      K: 768
