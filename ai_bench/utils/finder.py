@@ -18,4 +18,4 @@ def kernel_bench_dir() -> Path:
 
 def triton_kernels_dir() -> Path:
     """Path to the Triton kernels directory."""
-    return project_root() / "third_party" / "triton"
+    return project_root() / "backends" / "triton"

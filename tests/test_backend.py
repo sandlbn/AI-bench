@@ -1,3 +1,5 @@
+"""Tests for AI Bench harness with focus on backend selection and mocked execution."""
+
 from pathlib import Path
 import tempfile
 from unittest import mock
@@ -212,7 +214,7 @@ class TestKernelBenchRunnerExecution:
                 tmpdir / "third_party" / "KernelBench" / "KernelBench" / "level1"
             )
             triton_kernels_dir = (
-                tmpdir / "third_party" / "triton" / "KernelBench" / "level1"
+                tmpdir / "backends" / "triton" / "KernelBench" / "level1"
             )
 
             specs_dir.mkdir(parents=True)
@@ -564,7 +566,7 @@ class TestIntegration:
             pytorch_dir = (
                 tmpdir / "third_party" / "KernelBench" / "KernelBench" / "level1"
             )
-            triton_dir = tmpdir / "third_party" / "triton" / "KernelBench" / "level1"
+            triton_dir = tmpdir / "backends" / "triton" / "KernelBench" / "level1"
 
             specs_dir.mkdir(parents=True)
             pytorch_dir.mkdir(parents=True)
@@ -688,7 +690,7 @@ class Model(torch.nn.Module):
             )
             triton_model_cls = triton_runner.load_model(
                 integration_setup
-                / "third_party"
+                / "backends"
                 / "triton"
                 / "KernelBench"
                 / "level1"
