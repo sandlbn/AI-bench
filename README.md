@@ -47,7 +47,7 @@ python infra/scripts/run_kernel_bench.py --xpu --triton --bench
 
 Run tests with pytest:
 ```bash
-pytest ai_bench/tests/ -v
+pytest -v
 ```
 
 ## Linting
